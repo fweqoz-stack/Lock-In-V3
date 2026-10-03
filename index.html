@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09051f"><title>LOCK IN</title>
+<style>
+:root{--bg:#09051f;--panel:#100b2c;--line:#292044;--blue:#3985ff;--pink:#f45acb;--muted:#918ba8;--white:#f8f6ff;--green:#20c96b}
+*{box-sizing:border-box}body{margin:0;color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(ellipse at 50% 28%,#20245e 0,#100b35 38%,#08051d 78%);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#aaa 1px,transparent 1.5px);background-size:83px 91px;background-position:10px 15px}
+.app{max-width:520px;margin:auto;padding:22px 20px 110px;position:relative}.top{display:flex;align-items:center;justify-content:space-between;margin:6px 3px 32px}.logo{font-weight:1000;font-stretch:condensed;font-size:28px;letter-spacing:-1.5px}.logo span{color:#a9baff}.streakPill{border:1px solid #241a4a;background:#0a0626;border-radius:18px;padding:10px 14px;font-weight:900;color:#ff5b35}
+.page{display:none}.page.active{display:block}.eyebrow{font-size:11px;letter-spacing:2px;color:#aaa4c0;font-weight:800;text-transform:uppercase}
+.rankHero{text-align:center;padding:0 0 25px}.ring{width:230px;height:230px;border-radius:50%;margin:0 auto 24px;display:grid;place-items:center;position:relative;background:conic-gradient(var(--blue) var(--progress,0%),#454454 0);box-shadow:0 0 55px #304caa33}
+.ring:before{content:"";position:absolute;inset:10px;border-radius:50%;background:radial-gradient(circle,#20265d,#12103b 70%)}.gem{z-index:1;width:104px;height:104px;position:relative;display:grid;place-items:center}.gem:before{content:"";position:absolute;width:72px;height:72px;transform:rotate(45deg);border:7px solid #f6a3ff;background:linear-gradient(135deg,#f7c7ff,#b64fe9);box-shadow:0 0 26px #e56cff88}.gem:after{content:"";position:absolute;width:39px;height:39px;transform:rotate(45deg);border:5px solid #f9dcff;background:#df9aff}.gem i{z-index:2;width:17px;height:17px;transform:rotate(45deg);background:#fff}
+.ovr{font-size:43px;font-weight:950;letter-spacing:-1px}.rankName{font-size:19px;font-weight:900;color:var(--pink);margin-top:3px}.rankMeta{font-size:11px;color:#aaa4c0;margin-top:7px}
+.heading{display:flex;align-items:center;justify-content:space-between;margin:24px 2px 14px}.heading h2{font-size:23px;margin:0;letter-spacing:-.5px}.add{width:48px;height:48px;border:0;border-radius:50%;background:var(--blue);color:white;font-size:29px;box-shadow:0 7px 25px #347dff55}
+.week{display:flex;justify-content:space-between;margin:8px 0 26px}.day{width:13%;text-align:center;color:#89839f;font-size:12px}.day b{display:grid;place-items:center;width:42px;height:42px;margin:8px auto 0;border-radius:50%;background:#0c0829;color:white;font-size:16px}.day.today b{background:var(--blue)}.day.selected{color:white}
+.label{font-size:12px;letter-spacing:1.5px;color:#aaa4c0;margin:22px 4px 12px;font-weight:800}.task{display:flex;align-items:center;gap:13px;background:#09061dcc;border:1px solid #292044;border-radius:23px;padding:15px;margin:10px 0;min-height:86px;box-shadow:0 12px 28px #03020e55}.taskIcon{font-size:24px;color:var(--blue);width:32px;text-align:center}.taskInfo{flex:1;min-width:0}.taskName{font-weight:800;font-size:16px}.taskMeta{color:#a39cb8;font-size:12px;margin-top:6px}.tag{display:inline-block;padding:4px 9px;border-radius:7px;background:#17244b;color:#65a1ff;margin-right:6px}.task.done .taskName{text-decoration:line-through;color:#8b8799}.check{width:48px;height:48px;border:0;border-radius:50%;background:#1a1530;color:#777;font-size:23px;flex:none}.task.done .check{background:var(--green);color:white;box-shadow:0 0 24px #20c96b66}
+.card{border:1px solid #292044;background:#0b0824dd;border-radius:20px;padding:17px;margin:12px 0}.muted{color:var(--muted);font-size:12px}.progress{height:7px;border-radius:10px;background:#292442;overflow:hidden;margin-top:12px}.progress i{display:block;height:100%;background:var(--blue);width:0;transition:.2s}
+.btn{border:1px solid #393052;border-radius:13px;background:#171137;color:white;padding:12px 14px;font-weight:800}.btn.primary{background:var(--blue);border-color:var(--blue)}.full{width:100%;margin-top:10px}
+.field{display:flex;gap:8px}.field input{flex:1;min-width:0;background:#09061f;border:1px solid #30264e;border-radius:12px;color:white;padding:12px;outline:none}
+.goalRow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #211a3b}.goalRow:last-child{border:0}.goalActions{display:flex;gap:6px}.smallBtn{border:1px solid #3a3155;background:#171137;color:white;border-radius:9px;padding:7px 9px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#090a10f2;border-top:1px solid #282538;padding:12px 10px calc(12px + env(safe-area-inset-bottom));z-index:5;backdrop-filter:blur(16px)}nav>div{max-width:520px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr)}nav button{border:0;background:none;color:#85818e;font-size:11px;font-weight:800;padding:5px}nav button.active{color:white;text-shadow:0 0 20px white}nav em{font-style:normal;display:block;font-size:22px;margin-bottom:4px}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#f4f1ff;color:#100b2c;padding:11px 17px;border-radius:30px;font-size:12px;font-weight:900;opacity:0;transition:.2s;z-index:9;white-space:nowrap}.toast.show{opacity:1}
+@media(max-width:370px){.ring{width:200px;height:200px}.ovr{font-size:37px}.task{padding:12px}.check{width:42px;height:42px}}
+</style></head>
+<body><main class="app">
+<header class="top"><div class="logo">LOCK <span>↔</span> IN</div><div class="streakPill">🔥 <span id="streak">0</span></div></header>
+<section id="home" class="page active">
+<div class="rankHero"><div class="ring" id="ring"><div class="gem"><i></i></div></div><div class="ovr">OVR: <span id="ovr">0</span></div><div class="rankName" id="rank">Bronze I</div><div class="rankMeta" id="rankMeta">100 points to Bronze II</div></div>
+<div class="heading"><h2>To-Do</h2><button class="add" id="addTask">+</button></div>
+<div class="week" id="week"></div>
+<div class="label">TODAY'S HABITS <span id="taskCount"></span></div><div id="tasks"></div>
+<div class="card"><div style="display:flex;justify-content:space-between"><b>Daily completion</b><b id="pct">0%</b></div><div class="progress"><i id="dailyProgress"></i></div><p class="muted" id="streakHint">Complete every habit today to protect your streak.</p></div>
+</section>
+<section id="goals" class="page"><div class="heading"><h2>Goals</h2></div><div class="card"><b>Create a goal</b><form id="goalForm" class="field" style="margin-top:12px"><input id="goalInput" maxlength="60" placeholder="What are you working towards?"><button class="btn primary">Add</button></form></div><div class="label">YOUR GOALS</div><div id="goalsList"></div></section>
+<section id="stats" class="page"><div class="heading"><h2>Stats</h2></div><div class="card"><div class="muted">TOTAL RANK POINTS</div><div style="font-size:34px;font-weight:950" id="points">0</div><div class="muted">Every completed habit earns 20 rank points.</div></div><div class="card"><div class="muted">CURRENT RANK</div><h2 id="statsRank">Bronze I</h2><div class="progress"><i id="rankProgress"></i></div><p class="muted" id="statsMeta"></p></div><div class="card"><div class="muted">HABITS COMPLETED</div><h2 id="totalDone">0</h2></div></section>
+<section id="profile" class="page"><div class="heading"><h2>Profile</h2></div><div class="card"><div class="eyebrow">LOCK IN MEMBER</div><h2 id="profileRank">Bronze I</h2><p class="muted">Keep showing up. Build your streak.</p><button class="btn full" id="resetAll">Reset all progress</button></div></section>
+</main>
+<nav><div><button class="active" data-page="home"><em>⌂</em>HOME</button><button data-page="goals"><em>♧</em>GOALS</button><button data-page="stats"><em>▥</em>STATS</button><button data-page="profile"><em>◎</em>PROFILE</button></div></nav><div class="toast" id="toast"></div>
+<script>
+const KEY="lockin-v5";
+const ranks=["Bronze","Silver","Gold","Platinum","Diamond","Opal","Master","Legend"];
+const divisions=["I","II","III"];
+const today=()=>new Date().toLocaleDateString("en-CA");
+const defaults=()=>({points:0,streak:0,best:0,lastDate:today(),completedDate:"",done:[],tasks:[{id:1,name:"Gym",category:"Fitness",detail:"every day",icon:"↪"},{id:2,name:"Run",category:"Health",detail:"3 mi, every day",icon:"↪"},{id:3,name:"Study",category:"Mind",detail:"30 min, every day",icon:"✦"}],goals:[],totalDone:0});
+let s=JSON.parse(localStorage.getItem(KEY)||"null")||defaults();
+function save(){localStorage.setItem(KEY,JSON.stringify(s))}
+function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1700)}
+function rankInfo(){let n=Math.floor(s.points/100),tier=Math.min(Math.floor(n/3),ranks.length-1),div=n%3;return {name:ranks[tier]+" "+divisions[div],ovr:s.points%100,progress:s.points%100,next:100-s.points%100}}
+function rollover(){
+ const now=today();if(s.lastDate!==now){
+  const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);const y=yesterday.toLocaleDateString("en-CA");
+  if(s.lastDate===y){if(s.completedDate===s.lastDate){s.streak++;s.best=Math.max(s.best,s.streak)}else{s.streak=0}}
+  else{s.streak=0}
+  s.done=[];s.lastDate=now;save();
+ }
+}
+function render(){
+ const r=rankInfo();document.getElementById("streak").textContent=s.streak;
+ document.getElementById("ovr").textContent=r.ovr;document.getElementById("rank").textContent=r.name;
+ document.getElementById("rankMeta").textContent=r.next+" points to next division";
+ document.getElementById("ring").style.setProperty("--progress",r.progress+"%");
+ const completed=s.tasks.filter(t=>s.done.includes(t.id)).length,total=s.tasks.length,pct=total?Math.round(completed/total*100):0;
+ document.getElementById("taskCount").textContent=completed+"/"+total;document.getElementById("pct").textContent=pct+"%";document.getElementById("dailyProgress").style.width=pct+"%";
+ document.getElementById("streakHint").textContent=pct===100&&total?"All done! Your streak is protected for today.":"Complete every habit today to protect your streak.";
+ const box=document.getElementById("tasks");box.innerHTML="";
+ s.tasks.forEach(t=>{let done=s.done.includes(t.id),el=document.createElement("article");el.className="task"+(done?" done":"");el.innerHTML=`<div class="taskIcon">${t.icon||"✦"}</div><div class="taskInfo"><div class="taskName"></div><div class="taskMeta"><span class="tag"></span>${t.detail||"Daily"}</div></div><button class="check">${done?"✓":"○"}</button>`;
+ el.querySelector(".taskName").textContent=t.name;el.querySelector(".tag").textContent=t.category||"Habit";
+ el.querySelector(".check").onclick=()=>toggle(t.id);el.querySelector(".taskInfo").onclick=()=>editTask(t.id);box.appendChild(el)});
+ document.getElementById("points").textContent=s.points;document.getElementById("statsRank").textContent=r.name;document.getElementById("rankProgress").style.width=r.progress+"%";document.getElementById("statsMeta").textContent=r.next+" points until next division";document.getElementById("totalDone").textContent=s.totalDone;document.getElementById("profileRank").textContent=r.name;
+ renderGoals();renderWeek();
+}
+function toggle(id){if(s.done.includes(id)){s.done=s.done.filter(x=>x!==id);s.points=Math.max(0,s.points-20);s.totalDone=Math.max(0,s.totalDone-1)}else{s.done.push(id);s.points+=20;s.totalDone++;toast("+20 rank points")}
+ if(s.tasks.length&&s.done.length===s.tasks.length){s.completedDate=today();toast("All habits complete! Streak protected 🔥")}save();render()}
+function addTask(){let name=prompt("Habit name?");if(!name||!name.trim())return;let category=prompt("Category? (Fitness, Health, Mind...)","Habit")||"Habit";let detail=prompt("Short detail?","every day")||"Daily";s.tasks.push({id:Date.now(),name:name.trim(),category,detail,icon:"✦"});save();render();toast("Habit added")}
+function editTask(id){let t=s.tasks.find(x=>x.id===id);if(!t)return;let choice=prompt("Edit habit name, or type DELETE to remove it:",t.name);if(choice===null)return;if(choice.trim().toUpperCase()==="DELETE"){s.tasks=s.tasks.filter(x=>x.id!==id);s.done=s.done.filter(x=>x!==id);save();render();return}if(choice.trim()){t.name=choice.trim();save();render()}}
+function renderGoals(){let b=document.getElementById("goalsList");b.innerHTML="";s.goals.forEach((g,i)=>{let e=document.createElement("div");e.className="card goalRow";let span=document.createElement("span");span.textContent=g;e.append(span);let del=document.createElement("button");del.className="smallBtn";del.textContent="Remove";del.onclick=()=>{s.goals.splice(i,1);save();render()};e.append(del);b.append(e)})}
+function renderWeek(){let d=document.getElementById("week");d.innerHTML="";let now=new Date();let start=new Date(now);start.setDate(now.getDate()-now.getDay());["S","M","T","W","T","F","S"].forEach((v,i)=>{let date=new Date(start);date.setDate(start.getDate()+i);let e=document.createElement("div");e.className="day"+(i===now.getDay()?" today selected":"");e.innerHTML=v+"<b>"+date.getDate()+"</b>";d.append(e)})}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(b.dataset.page).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active")});
+document.getElementById("addTask").onclick=addTask;
+document.getElementById("goalForm").onsubmit=e=>{e.preventDefault();let v=document.getElementById("goalInput").value.trim();if(v){s.goals.push(v);document.getElementById("goalInput").value="";save();render();toast("Goal added")}};
+document.getElementById("resetAll").onclick=()=>{if(confirm("Delete all Lock In progress and habits?")){s=defaults();save();render();toast("Progress reset")}};
+rollover();render();
+</script></body></html>
